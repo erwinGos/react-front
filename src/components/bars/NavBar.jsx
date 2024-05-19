@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import ImperialMainLogo from "../../assets/images/imperial_main_logo.png";
+import ImperialMainLogo from "../../assets/images/imperial_logo_black.png";
 
 const navigation = [
   { name: 'Devenir prestataire', href: '#' },
@@ -57,7 +57,7 @@ const Navbar = () => {
                 <span className="sr-only">Your Company</span>
                 <img
                   className="h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                  src={ImperialMainLogo}
                   alt=""
                 />
               </a>
