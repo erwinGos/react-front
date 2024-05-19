@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    font-family: 'Urbanist';
+}
+
+.navlinks {
+    font-weight: 400;
+}
+
+.hover-grow-border::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 1px;
+    background-color: currentColor;
+    transition: width 0.5s;
+    margin: 0 auto;
+}
+
+.hover-grow-border:hover::after {
+width: 100%;
+}
