@@ -69,7 +69,7 @@ const RadioSelector = ({setSelectedWrapper}) => {
                 </span>
                 <span
                   className={classNames(
-                    active ? 'border' : 'border-[3px] duration-300',
+                    active ? 'border' : 'border-[3px] duration-500',
                     checked ? 'border-[#B19145]' : 'border-transparent',
                     'pointer-events-none absolute -inset-px rounded-lg'
                   )}
