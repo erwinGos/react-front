@@ -41,7 +41,7 @@ const RegisterForm = () => {
   const personalInformations = () => {
     return (
     <div className='py-14 animate__animated animate__fadeIn'>
-      <form>
+      <form onSubmit={(e) => e.preventDefault()}>
         <div>
           <h2 className="text-[24px] my-6 font-semibold leading-7 text-gray-900">Informations personelles</h2>
           <div className='grid grid-cols-1 gap-y-6 sm:grid-cols-3 sm:gap-x-4 my-4'>
@@ -148,7 +148,7 @@ const RegisterForm = () => {
     return (
     <div className='py-14 animate__animated animate__fadeIn'>
       {addedCars.length <= 0 ? (
-      <form>
+      <form onSubmit={(e) => e.preventDefault()}>
         <div>
           <h2 className="text-[24px] my-6 font-semibold leading-7 text-gray-900">Ajouter un véhicule</h2>
           <div className='grid grid-cols-1 gap-y-6 sm:grid-cols-3 sm:gap-x-4 my-4'>
