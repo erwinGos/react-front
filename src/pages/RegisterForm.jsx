@@ -183,7 +183,7 @@ const RegisterForm = () => {
     return (
     <div className='py-14 animate__animated animate__fadeIn'>
       {toggleForm ? (
-      <form onSubmit={(e) => e.preventDefault()}>
+      <form className='animate__animated animate__fadeIn' onSubmit={(e) => e.preventDefault()}>
         <div>
           <h2 className="text-[24px] my-6 font-semibold leading-7 text-gray-900">Ajouter un véhicule</h2>
           <div className='grid grid-cols-1 gap-y-6 sm:grid-cols-3 sm:gap-x-4 my-4'>
@@ -292,7 +292,7 @@ const RegisterForm = () => {
       </form>
       ) 
       : 
-      <fieldset>
+      <fieldset className='animate__animated animate__fadeIn'>
         <h2 className="text-[24px] my-6 font-semibold leading-7 text-gray-900">Ajouter un véhicule</h2>
         <div className="space-y-5">
           {userCars.map((car) => (
