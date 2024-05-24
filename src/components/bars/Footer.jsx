@@ -1,5 +1,6 @@
 import React from 'react'
 import ImperialMainLogo from "../../assets/images/imperial_logo_white.png";
+import { useLocation } from "react-router-dom";
 
 const navigation = {
     solutions: [
@@ -80,86 +81,89 @@ const navigation = {
 
 export const Footer = () => {
 
+  const location = useLocation();
+
     return (
-        <footer className="bg-[#141529]" aria-labelledby="footer-heading">
-          <div className="mx-auto max-w-[115rem] px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
-            <div className="xl:grid xl:grid-cols-5 xl:gap-8">
-              <div className="space-y-8 xl:col-span-3">
-                <img
-                  className="w-auto"
-                  src={ImperialMainLogo}
-                  alt=""
-                />
-                <p className="text-sm leading-6 text-gray-300 max-w-[200px] lg:text-left text-center">
-                Nos conseillers sont disponibles 
-                du lundi au vendredi de 8h00 à 
-                13h00 et de 14h00 à 17h
-                </p>
+      location.pathname == "/" ? null : 
+      <footer className="bg-[#141529]" aria-labelledby="footer-heading">
+      <div className="mx-auto max-w-[115rem] px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
+        <div className="xl:grid xl:grid-cols-5 xl:gap-8">
+          <div className="space-y-8 xl:col-span-3">
+            <img
+              className="w-auto"
+              src={ImperialMainLogo}
+              alt=""
+            />
+            <p className="text-sm leading-6 text-gray-300 max-w-[200px] lg:text-left text-center">
+            Nos conseillers sont disponibles 
+            du lundi au vendredi de 8h00 à 
+            13h00 et de 14h00 à 17h
+            </p>
+          </div>
+          <div className="mt-16 grid grid-cols-1 gap-8 xl:col-span-2 xl:mt-0">
+            <div className="md:grid md:grid-cols-3 md:gap-8">
+              <div>
+                <h3 className="text-[18px] font-medium leading-6 text-white">Imperial</h3>
+                <ul role="list" className="mt-6 space-y-4">
+                  {navigation.solutions.map((item) => (
+                    <li key={item.name}>
+                      <a href={item.href} className="text-sm leading-6 text-[#A1A1A8] hover:text-white duration-200">
+                        {item.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <div className="mt-16 grid grid-cols-1 gap-8 xl:col-span-2 xl:mt-0">
-                <div className="md:grid md:grid-cols-3 md:gap-8">
-                  <div>
-                    <h3 className="text-[18px] font-medium leading-6 text-white">Imperial</h3>
-                    <ul role="list" className="mt-6 space-y-4">
-                      {navigation.solutions.map((item) => (
-                        <li key={item.name}>
-                          <a href={item.href} className="text-sm leading-6 text-[#A1A1A8] hover:text-white duration-200">
-                            {item.name}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="mt-10 md:mt-0">
-                    <h3 className="text-[18px] font-medium leading-6 text-white">Nos services</h3>
-                    <ul role="list" className="mt-6 space-y-4">
-                      {navigation.services.map((item) => (
-                        <li key={item.name}>
-                          <a href={item.href} className="text-sm leading-6 text-[#A1A1A8] hover:text-white duration-200">
-                            {item.name}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="mt-10 md:mt-0">
-                    <h3 className="text-[18px] font-medium leading-6 text-white">Rejoignez-nous</h3>
-                    <div className='flex flex-col gap-3 mt-4'>
-                      <a href="#" className="text-[14px] mt-2 rounded-md bg-[#B19145] px-6 py-2 h-[40px] flex items-center justify-center text-sm text-center text-white shadow-sm hover:bg-[#805B00] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 transition-all duration-200">
-                        <div className='flex justify-center items-center gap-2'>
-                          Devenir Chauffeur
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                            <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm4.28 10.28a.75.75 0 0 0 0-1.06l-3-3a.75.75 0 1 0-1.06 1.06l1.72 1.72H8.25a.75.75 0 0 0 0 1.5h5.69l-1.72 1.72a.75.75 0 1 0 1.06 1.06l3-3Z" clipRule="evenodd" />
-                          </svg>
-                        </div>
+              <div className="mt-10 md:mt-0">
+                <h3 className="text-[18px] font-medium leading-6 text-white">Nos services</h3>
+                <ul role="list" className="mt-6 space-y-4">
+                  {navigation.services.map((item) => (
+                    <li key={item.name}>
+                      <a href={item.href} className="text-sm leading-6 text-[#A1A1A8] hover:text-white duration-200">
+                        {item.name}
                       </a>
-                      <a href="#" className="text-[14px] mt-2 rounded-md bg-[#B19145] px-6 py-2 h-[40px] flex items-center justify-center text-sm text-center text-white shadow-sm hover:bg-[#805B00] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 transition-all duration-200">
-                        <div className='flex justify-center items-center gap-2'>
-                          Devenir Partenaire
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                            <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm4.28 10.28a.75.75 0 0 0 0-1.06l-3-3a.75.75 0 1 0-1.06 1.06l1.72 1.72H8.25a.75.75 0 0 0 0 1.5h5.69l-1.72 1.72a.75.75 0 1 0 1.06 1.06l3-3Z" clipRule="evenodd" />
-                          </svg>
-                        </div>
-                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="mt-10 md:mt-0">
+                <h3 className="text-[18px] font-medium leading-6 text-white">Rejoignez-nous</h3>
+                <div className='flex flex-col gap-3 mt-4'>
+                  <a href="#" className="text-[14px] mt-2 rounded-md bg-[#B19145] px-6 py-2 h-[40px] flex items-center justify-center text-sm text-center text-white shadow-sm hover:bg-[#805B00] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 transition-all duration-200">
+                    <div className='flex justify-center items-center gap-2'>
+                      Devenir Chauffeur
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                        <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm4.28 10.28a.75.75 0 0 0 0-1.06l-3-3a.75.75 0 1 0-1.06 1.06l1.72 1.72H8.25a.75.75 0 0 0 0 1.5h5.69l-1.72 1.72a.75.75 0 1 0 1.06 1.06l3-3Z" clipRule="evenodd" />
+                      </svg>
                     </div>
-                  </div>
+                  </a>
+                  <a href="#" className="text-[14px] mt-2 rounded-md bg-[#B19145] px-6 py-2 h-[40px] flex items-center justify-center text-sm text-center text-white shadow-sm hover:bg-[#805B00] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 transition-all duration-200">
+                    <div className='flex justify-center items-center gap-2'>
+                      Devenir Partenaire
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                        <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm4.28 10.28a.75.75 0 0 0 0-1.06l-3-3a.75.75 0 1 0-1.06 1.06l1.72 1.72H8.25a.75.75 0 0 0 0 1.5h5.69l-1.72 1.72a.75.75 0 1 0 1.06 1.06l3-3Z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
-            <div className="mt-16 border-t border-white/10 pt-8 sm:mt-20 lg:mt-24 flex justify-between">
-              <p className="text-sm leading-5 text-gray-400">&copy; {new Date().getFullYear()} Imperial, Inc.</p>
-              <div className="flex space-x-6">
-                {navigation.social.map((item) => (
-                  <a key={item.name} href={item.href} className="text-gray-500 hover:text-gray-400">
-                    <span className="sr-only">{item.name}</span>
-                    <item.icon className="h-6 w-6" aria-hidden="true" />
-                  </a>
-                ))}
-              </div>
-            </div>
           </div>
-        </footer>
-      )
+        </div>
+        <div className="mt-16 border-t border-white/10 pt-8 sm:mt-20 lg:mt-24 flex justify-between">
+          <p className="text-sm leading-5 text-gray-400">&copy; {new Date().getFullYear()} Imperial, Inc.</p>
+          <div className="flex space-x-6">
+            {navigation.social.map((item) => (
+              <a key={item.name} href={item.href} className="text-gray-500 hover:text-gray-400">
+                <span className="sr-only">{item.name}</span>
+                <item.icon className="h-6 w-6" aria-hidden="true" />
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </footer>
+    )
 }
 
 export default Footer;
