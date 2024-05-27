@@ -2,20 +2,35 @@ import { useState } from 'react'
 import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import ImperialMainLogo from "../../assets/images/imperial_logo_black.png";
+import { Link, useNavigate } from 'react-router-dom';
+import {useSelector, useDispatch} from "react-redux"
+import { ArrowLeftStartOnRectangleIcon } from '@heroicons/react/24/solid';
+import { checkTokenValidity, logoutUser } from '../../app/features/auth/authSlice';
 
 const navigation = [
   { name: 'Devenir prestataire', href: '#' },
   { name: 'Entreprise', href: '#' },
   { name: 'Assistance', href: '#' },
   { name: 'A propos', href: '#' },
+  { name: 'Actualités', href: '#' }
 ]
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+
+  const handleLogoutEvent = () => {
+    dispatch(logoutUser());
+    dispatch(checkTokenValidity());
+    navigate('/');
+  }
 
   return (
     <header className="bg-[#FFFFFF] inset-x-0 top-0 z-50 border-b-[#DEDFE3] border-b-[1px]">
-        <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
+        <nav className="flex items-center justify-between p-[1.065rem] lg:px-8" aria-label="Global">
           <div className="flex lg:flex-1">
             <a href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
@@ -36,17 +51,22 @@ const Navbar = () => {
               <Bars3Icon className="h-6 w-6" aria-hidden="true" />
             </button>
           </div>
-          <div className="hidden lg:flex lg:gap-x-12">
+          <div className="hidden lg:flex lg:gap-x-10">
             {navigation.map((item) => (
-              <a key={item.name} href={item.href} className="text-[16px] font-semibold leading-6 text-gray-900 navlinks hover-grow-border">
+              <a key={item.name} href={item.href} className="text-[16px] leading-6 text-gray-900 navlinks hover-grow-border">
                 {item.name}
               </a>
             ))}
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <a href="#" className="text-[14px] rounded-md bg-[#B19145] px-6 py-2 w-[153px] h-[35px] text-sm text-center text-white shadow-sm hover:bg-[#805B00] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 transition-all duration-200">
-              Rejoignez-Nous
-            </a>
+            {auth.isAuth ?
+            <button onClick={() => handleLogoutEvent()} className="flex justify-center items-center text-[14px] rounded-2xl bg-[#141529] p-2 w-[130px] h-[37px] text-sm text-center text-white shadow-sm hover:bg-[#25274d] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 transition-all duration-200">
+              Deconnexion <ArrowLeftStartOnRectangleIcon className="w-5 h-5 text-white ml-1"/>
+            </button>
+            : 
+            <Link to="/" className="text-[14px] rounded-lg	 bg-[#B19145] px-6 py-2 w-[153px] h-[35px] text-sm text-center text-white shadow-sm hover:bg-[#805B00] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 transition-all duration-200">
+                    Rejoignez-Nous
+            </Link>}
           </div>
         </nav>
         <Dialog className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
@@ -84,9 +104,14 @@ const Navbar = () => {
                   ))}
                 </div>
                 <div className="py-6">
-                <a href="#" className="text-[14px] rounded-md bg-[#B19145] px-6 py-2 w-[153px] h-[35px] text-sm text-center text-white shadow-sm hover:bg-[#805B00] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 transition-all duration-200">
-                  Rejoignez-Nous
-                </a>
+                {auth.isAuth ?
+                  <button onClick={() => handleLogoutEvent()} className="flex justify-center items-center text-[14px] rounded-2xl bg-[#141529] p-2 w-[130px] h-[37px] text-sm text-center text-white shadow-sm hover:bg-[#25274d] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 transition-all duration-200">
+                    Deconnexion <ArrowLeftStartOnRectangleIcon className="w-5 h-5 text-white ml-1"/>
+                  </button>
+                  : 
+                  <Link to="/" className="text-[14px] rounded-lg	 bg-[#B19145] px-6 py-2 w-[153px] h-[35px] text-sm text-center text-white shadow-sm hover:bg-[#805B00] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 transition-all duration-200">
+                          Rejoignez-Nous
+                  </Link>}
                 </div>
               </div>
             </div>

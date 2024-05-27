@@ -1,6 +1,7 @@
 import React from 'react'
 import ImperialMainLogo from "../../assets/images/imperial_logo_white.png";
 import { useLocation } from "react-router-dom";
+import {useSelector} from "react-redux"
 
 const navigation = {
     solutions: [
@@ -80,12 +81,11 @@ const navigation = {
   }
 
 export const Footer = () => {
+  const auth = useSelector((state) => state.auth);
 
-  const location = useLocation();
-
-    return (
-      location.pathname == "/" ? null : 
-      <footer className="bg-[#141529]" aria-labelledby="footer-heading">
+  return (
+    auth.isAuth == false ? 
+    <footer className="bg-[#141529]" aria-labelledby="footer-heading">
       <div className="mx-auto max-w-[115rem] px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
         <div className="xl:grid xl:grid-cols-5 xl:gap-8">
           <div className="space-y-8 xl:col-span-3">
@@ -162,8 +162,8 @@ export const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>
-    )
+    </footer> : null
+  )
 }
 
 export default Footer;
