@@ -13,7 +13,7 @@ const Signin = () => {
     const [credentials, setCredentials] = useState({
         username: "",
         password: "",
-        rememberMe: ""
+        rememberMe: false
     });
 
     const handleLoginEvent = (e) => {
@@ -33,7 +33,7 @@ const Signin = () => {
             </div>
             <div className="w-1/2 flex flex-1 flex-col justify-center animate__animated animate__fadeIn">
                 <div className="mx-auto w-full lg:max-w-[60%] max-w-sm mb-10">
-                    <p className="text-right">Vous n'avez pas de compte ? <Link to="/" className="hover:underline duration-200 text-[#B19145]"> Inscrivez-vous !</Link></p>
+                    <p className="text-right">Vous n'avez pas de compte ? <Link to="/register" className="hover:underline duration-200 text-[#B19145]"> Inscrivez-vous !</Link></p>
                 </div>
                 <div className="mx-auto w-full lg:max-w-[60%] max-w-sm p-6 border-[1px] border-gray-200 rounded-md">
                     <div>
