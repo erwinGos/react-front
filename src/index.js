@@ -5,6 +5,7 @@ import App from './App';
 import { Provider } from 'react-redux'
 import { store } from '../src/app/store';
 import 'animate.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 

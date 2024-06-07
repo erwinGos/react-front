@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { RadioGroup } from '@headlessui/react'
-import { ExclamationTriangleIcon } from '@heroicons/react/24/solid';
+import { CheckCircleIcon, ExclamationTriangleIcon } from '@heroicons/react/24/solid';
 
 
 function classNames(...classes) {
@@ -8,7 +8,6 @@ function classNames(...classes) {
 }
 
 const RadioSelector = ({setSelectedWrapper, mailingList}) => {
-
 
   const changeSelectedWrapper = (selectedItem) => {
     setSelectedWrapper(selectedItem.id - 1);
@@ -36,18 +35,25 @@ const RadioSelector = ({setSelectedWrapper, mailingList}) => {
                 <span className="flex flex-1">
                   <span className="flex flex-col">
                     <RadioGroup.Label as="span" className="text-md font-semibold text-gray-900 gap-1 flex items-center">
-                      {mailingList.icon}
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d={mailingList.icon} />
+                      </svg>
                       {mailingList.title}
                     </RadioGroup.Label>
-                    <RadioGroup.Description as="span" className="mt-6 text-sm font-semibold text-gray-900 gap-1 flex items-center">
-                      <ExclamationTriangleIcon className="h-6 w-6 text-yellow-500" /> Manquant
-                    </RadioGroup.Description>
+                    {!mailingList.completed ? 
+                      <RadioGroup.Description as="span" className="mt-6 text-sm font-semibold text-gray-900 gap-1 flex items-center">
+                        <ExclamationTriangleIcon className="h-6 w-6 text-yellow-500" /> Manquant
+                      </RadioGroup.Description> :
+                      <RadioGroup.Description as="span" className="mt-6 text-sm font-semibold text-gray-900 gap-1 flex items-center">
+                        <CheckCircleIcon className="h-6 w-6 text-green-500" /> Complet
+                      </RadioGroup.Description>
+                    }
                   </span>
                 </span>
                 <span
                   className={classNames(
                     active ? 'border' : 'border-[3px] duration-500',
-                    checked ? 'border-[#B19145]' : 'border-transparent',
+                    checked ? (mailingList.completed ? 'border-green-500' : 'border-[#B19145]') : 'border-transparent',
                     'pointer-events-none absolute -inset-px rounded-lg'
                   )}
                   aria-hidden="true"

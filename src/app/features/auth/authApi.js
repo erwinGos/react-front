@@ -14,6 +14,27 @@ export async function SignInApi(userCredentials) {
     return data;
 }
 
+export async function SignUpApi(userCredentials) {
+    const request = await axios.post(`${process.env.REACT_APP_HOST_NAME}/user/register`, userCredentials, {
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        withCredentials: true,
+        credentials: 'include'
+    });
+    const data = request.data;
+    return data;
+}
+
+export async function PostEmailValidationApi(code) {
+    const request = await axios.post(`${process.env.REACT_APP_HOST_NAME}/activate?code=${parseInt(code)}`,{
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+    const data = request.data;
+    return data;
+}
 
 export async function checkTokenValidityApi() {
     const token = Cookies.get("auth_token");

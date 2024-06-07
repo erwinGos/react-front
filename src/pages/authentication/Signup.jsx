@@ -1,15 +1,83 @@
 import { Link } from "react-router-dom";
 import authenticationBackground from "../../assets/images/authentication_bg.jpg";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import { SignUpMethod } from "../../app/features/auth/authSlice";
+import { useDispatch } from "react-redux";
+import { ToastContainer, toast } from 'react-toastify';
 
 const Signup = () => {
-
+    const dispatch = useDispatch();
     const [showPassword, setShowPassword] = useState(false);
+    const [checkedConditions, setCheckedConditions] = useState(false);
+    const [hasToBeModified, setHasToBeModified] = useState(false);
+    const [credentials, setCredentials] = useState({
+        email: "",
+        phoneNumber: "",
+        password: "",
+        repeatPassword: "",
+        driverType: "TAXI"
+    });
+
+    const handleFormEvent = (e) => {
+        e.preventDefault();
+
+        if(credentials.password != credentials.repeatPassword) {
+            setHasToBeModified(true);
+            setCheckedConditions(false);
+            toast.warn('Les deux mot de passe doivent correspondre.');
+            return;
+        }
+
+        if(credentials.password.length < 8 || credentials.password.length > 100) {
+            setHasToBeModified(true);
+            setCheckedConditions(false);
+            toast.warn('Mot de passe : la taille doit être comprise entre 8 et 100.');
+            return;
+        }
+
+        if(!(/^06\d{8}$/).test(credentials.phoneNumber)) {
+            setHasToBeModified(true);
+            setCheckedConditions(false);
+            toast.warn('Le numéro de téléphone est invalide.');
+            return;
+        }
+
+        if(checkedConditions == false) {
+            setHasToBeModified(true);
+            setCheckedConditions(false);
+            toast.warn('Vous devez avoir lu et accepté les termes et conditions d\'utilisation.');
+            return;
+        }
+
+        dispatch(SignUpMethod(credentials)).then(res => console.log(res));
+        setCredentials({
+            email: "",
+            phoneNumber: "",
+            password: "",
+            repeatPassword: "",
+            driverType: "TAXI"
+        });
+    }
+
+    useEffect(() => {
+        setHasToBeModified(false)
+    }, [credentials, checkedConditions])
     return (
       <>
         <div className="flex min-h-[92vh] flex-1">
+            <ToastContainer
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={true}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
             <div className="relative hidden flex-1 lg:block w-1/2">
                 <img
                 className="absolute inset-0 h-full object-cover"
@@ -28,8 +96,7 @@ const Signup = () => {
                         </h2>
                     </div>
                     <div className="mt-10">
-                        <div>
-                        <form onSubmit={(e) => e.preventDefault(e)} className="space-y-3">
+                        <form onSubmit={(e) => handleFormEvent(e)} className="space-y-3">
                             <div>
                                 <label htmlFor="email" className="block text-sm leading-6 text-gray-900 font-semibold">
                                     Adresse mail
@@ -40,6 +107,8 @@ const Signup = () => {
                                     name="email"
                                     type="email"
                                     placeholder="johndoe@imperial.com"
+                                    value={credentials.email}
+                                    onChange={(e) => setCredentials({...credentials, email: e.target.value})}
                                     required
                                     className="block w-full outline-0 rounded-md border-0 py-3 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#B19145] sm:text-sm sm:leading-6"
                                     />
@@ -54,7 +123,9 @@ const Signup = () => {
                                     id="phone_number"
                                     name="phone_number"
                                     type="text"
-                                    placeholder="+33606060606"
+                                    placeholder="0606060606"
+                                    value={credentials.phoneNumber}
+                                    onChange={(e) => setCredentials({...credentials, phoneNumber: e.target.value})}
                                     required
                                     className="block w-full outline-0 rounded-md border-0 py-3 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#B19145] sm:text-sm sm:leading-6"
                                     />
@@ -71,6 +142,8 @@ const Signup = () => {
                                     name="password"
                                     type={showPassword ? "text" : "password"}
                                     placeholder="********"
+                                    value={credentials.password}
+                                    onChange={(e) => setCredentials({...credentials, password: e.target.value})}
                                     required
                                     className="block w-full outline-0 rounded-md border-0 py-3 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#B19145] sm:text-sm sm:leading-6"
                                     />
@@ -89,6 +162,8 @@ const Signup = () => {
                                     name="password_repeat"
                                     type={showPassword ? "text" : "password"}
                                     placeholder="********"
+                                    value={credentials.repeatPassword}
+                                    onChange={(e) => setCredentials({...credentials, repeatPassword: e.target.value})}
                                     required
                                     className="block w-full outline-0 rounded-md border-0 py-3 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#B19145] sm:text-sm sm:leading-6"
                                     />
@@ -104,10 +179,12 @@ const Signup = () => {
                                 id="remember-me"
                                 name="remember-me"
                                 type="checkbox"
+                                checked={checkedConditions}
+                                onChange={() => setCheckedConditions(!checkedConditions)}
                                 className="h-4 w-4 rounded border-gray-300 text-gray-600 focus:ring-gray-600 accent-black"
                                 />
-                                <label htmlFor="remember-me" className="ml-3 block text-sm leading-6 text-gray-700">
-                                Je confirme avoir lu et compris les termes et conditions 
+                                <label htmlFor="remember-me" className={"ml-3 block text-sm leading-6 text-gray-700"}>
+                                    Je confirme avoir lu et compris les termes et conditions 
                                 </label>
                             </div>
                             </div>
@@ -115,14 +192,13 @@ const Signup = () => {
                             <div>
                             <button
                                 type="submit"
-                                className="text-[14px] rounded-md bg-[#1D1F39] px-6 py-2 w-full h-[45px] text-sm text-center text-white shadow-sm hover:bg-[#141414] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 transition-all duration-200"
+                                disabled={hasToBeModified}
+                                className={(hasToBeModified ? "bg-[#2f303f] hover:none text-gray-400 " : "bg-[#1D1F39] hover:bg-[#141414] text-white ") + "text-[14px] rounded-md px-6 py-2 w-full h-[45px] text-sm text-center shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 transition-all duration-200"}
                             >
                                 S'inscrire
                             </button>
                             </div>
                         </form>
-                        </div>
-        
                         {/* <div className="mt-10">
                             <div className="relative">
                                 <div className="absolute inset-0 flex items-center" aria-hidden="true">

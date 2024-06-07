@@ -9,6 +9,8 @@ import {useDispatch, useSelector} from "react-redux"
 import { useEffect } from 'react';
 import { checkTokenValidity } from './app/features/auth/authSlice';
 import ProtectedRoute from './components/middlewares/protectedRoute';
+import VerifyEmail from './pages/authentication/VerifyEmail';
+
 
 
 function App() {
@@ -25,6 +27,7 @@ function App() {
       <Routes>
         <Route path='/register' element={<ProtectedAuth><Signup/></ProtectedAuth>} />
         <Route path='/' element={<ProtectedAuth><Signin/></ProtectedAuth>} />
+        <Route path='/otp' element={<ProtectedAuth><VerifyEmail/></ProtectedAuth>} />
         <Route path='/home' element={<ProtectedRoute><RegisterForm/></ProtectedRoute>} />
       </Routes>
       <Footer/>

@@ -1,14 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import authenticationBackground from "../../assets/images/authentication_bg.jpg";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { SignInMethod } from "../../app/features/auth/authSlice";
-
+import { ToastContainer, toast } from 'react-toastify';
 
 const Signin = () => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const [credentials, setCredentials] = useState({
         username: "",
@@ -19,11 +20,29 @@ const Signin = () => {
     const handleLoginEvent = (e) => {
         e.preventDefault();
     
-        dispatch(SignInMethod(credentials))
-      }
+        dispatch(SignInMethod(credentials)).then((res) => {
+            toast.warn(res.payload.detail);
+            if(res.payload.status == 500) {
+                setTimeout(navigate("/otp"), 2000);
+            }
+            return;
+        })
+    }
     
     return (
         <div className="flex min-h-[92vh] flex-1">
+            <ToastContainer
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={true}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
             <div className="relative hidden flex-1 lg:block w-1/2">
                 <img
                 className="absolute inset-0 h-full object-cover"
@@ -83,25 +102,10 @@ const Signin = () => {
                                 </div>
                             </div>
         
-                            <div className="flex items-center justify-between">
-                            <div className="flex items-center">
-                                <input
-                                id="remember-me"
-                                name="remember-me"
-                                type="checkbox"
-                                onChange={(e) => setCredentials({...credentials, rememberMe: e.target.checked})}
-                                className="h-4 w-4 rounded border-gray-300 text-gray-600 focus:ring-gray-600 accent-black"
-                                />
-                                <label htmlFor="remember-me" className="ml-3 block text-sm leading-6 text-gray-700">
-                                Je confirme avoir lu et compris les termes et conditions 
-                                </label>
-                            </div>
-                            </div>
-        
                             <div>
                             <button
                                 type="submit"
-                                className="text-[14px] rounded-md bg-[#1D1F39] px-6 py-2 w-full h-[45px] text-sm text-center text-white shadow-sm hover:bg-[#141414] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 transition-all duration-200"
+                                className="text-[14px] mt-4 rounded-md bg-[#1D1F39] px-6 py-2 w-full h-[45px] text-sm text-center text-white shadow-sm hover:bg-[#141414] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 transition-all duration-200"
                             >
                                 S'inscrire
                             </button>
