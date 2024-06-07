@@ -51,7 +51,33 @@ const PersonalInformations = ({reloadTab, Tab}) => {
         campagnyName: payload.campagnyName,
         siretNumber: payload.siretNumber
       });
-      dispatch(GetCurrentInfos()).then(res => setPayload(res.payload));
+      dispatch(GetCurrentInfos()).then(res => {
+        setPayload(res.payload);
+        if(res.payload.firstName.length >= 1 && 
+          res.payload.lastName.length >= 1 && 
+          res.payload.birthDate.length >= 1 && 
+          res.payload.adress.length >= 1 &&
+          res.payload.city.length >= 1 &&
+          res.payload.zipCode.length >= 1 &&
+          res.payload.siretNumber.length >= 1
+        ) {
+          let deepCopyMailingList = JSON.parse(JSON.stringify(register.mailingList));
+          let deepCopyTab = JSON.parse(JSON.stringify(Tab));
+          let tabIndex = deepCopyMailingList.findIndex(tab => tab.id == 1);
+          let copyTab = { ...deepCopyTab, completed: true };
+          deepCopyMailingList.splice(tabIndex, 1, copyTab);
+          dispatch(updateTab(deepCopyMailingList));
+        } else {
+          let deepCopyMailingList = JSON.parse(JSON.stringify(register.mailingList));
+          let deepCopyTab = JSON.parse(JSON.stringify(Tab));
+          let tabIndex = deepCopyMailingList.findIndex(tab => tab.id == 1);
+          let copyTab = { ...deepCopyTab, completed: false };
+          deepCopyMailingList.splice(tabIndex, 1, copyTab);
+          dispatch(updateTab(deepCopyMailingList));
+        }
+      });
+
+      
     }, [])
 
     return (
