@@ -59,3 +59,34 @@ export async function SetDefaultCarApi(parameters) {
     const data = request.data;
     return data;
 }
+
+export async function UpdateClientCarApi(payload) {
+    console.log(payload)
+    const token = Cookies.get("auth_token");
+    const request = await axios.patch(`${process.env.REACT_APP_HOST_NAME}/user/driver/cars/${payload.id}`, payload,{
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+        },
+        withCredentials: true,
+        credentials: 'include'
+    });
+    const data = request.data;
+    return data;
+}
+
+export async function CreateClientCarApi(payload) {
+    const token = Cookies.get("auth_token");
+    const request = await axios.post(`${process.env.REACT_APP_HOST_NAME}/user/driver/cars`, payload,{
+        headers: {
+            'Content-Type': '*/*',
+            Authorization: `Bearer ${token}`,
+            Host: process.env.REACT_APP_HOST_NAME
+        },
+        withCredentials: true,
+        credentials: 'include'
+    });
+
+    const data = request.data;
+    return data;
+}

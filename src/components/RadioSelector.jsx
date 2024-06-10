@@ -26,7 +26,8 @@ const RadioSelector = ({setSelectedWrapper, mailingList}) => {
             className={({ active }) =>
               classNames(
                 active ? 'border-gray-600' : 'border-gray-300',
-                'relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none'
+                'relative flex cursor-pointer rounded-lg border p-4 shadow-sm focus:outline-none',
+                mailingList.completed ? 'bg-[#E0FFF0]' : 'bg-white'
               )
             }
           >

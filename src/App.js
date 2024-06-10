@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 import { checkTokenValidity } from './app/features/auth/authSlice';
 import ProtectedRoute from './components/middlewares/protectedRoute';
 import VerifyEmail from './pages/authentication/VerifyEmail';
+import { GetCurrentInfos } from './app/features/driver/driverSlice';
 
 
 
@@ -18,6 +19,7 @@ function App() {
   const auth = useSelector(state => state.auth);
   useEffect(() => {
     dispatch(checkTokenValidity());
+    dispatch(GetCurrentInfos());
   },[])
 
   return (

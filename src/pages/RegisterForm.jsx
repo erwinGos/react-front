@@ -11,8 +11,6 @@ const RegisterForm = () => {
   const mailingList = useSelector(state => state.register.mailingList);
   const [userInformations, setUserInformations] = useState({});
   const [selectedWrapper, setSelectedWrapper] = useState(0);
-  const [toggleForm, setToggleForm] = useState(false);
-  const [addedCars, setAddedCars] = useState([]);
 
   return (
     <div className='flex flex-col min-h-[95vh] w-auto md:px-[8rem] p-2'>

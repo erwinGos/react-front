@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { GetClientCarsApi, SetDefaultCarApi, GetBrandListApi, GetBrandModelsApi } from "./carApi";
+import { GetClientCarsApi, SetDefaultCarApi, GetBrandListApi, GetBrandModelsApi, UpdateClientCarApi, CreateClientCarApi } from "./carApi";
 import Cookies from "js-cookie";
 
 export const GetClientCars = createAsyncThunk(
@@ -7,6 +7,30 @@ export const GetClientCars = createAsyncThunk(
     async (parameters, { rejectWithValue }) => {
         try {
             const response = await GetClientCarsApi(parameters);
+            return response;
+        } catch(err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+export const UpdateClientCar = createAsyncThunk(
+    'car/UpdateClientCar',
+    async (parameters, { rejectWithValue }) => {
+        try {
+            const response = await UpdateClientCarApi(parameters);
+            return response;
+        } catch(err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+export const CreateClientCar = createAsyncThunk(
+    'car/CreateClientCar',
+    async (parameters, { rejectWithValue }) => {
+        try {
+            const response = await CreateClientCarApi(parameters);
             return response;
         } catch(err) {
             return rejectWithValue(err.response.data);

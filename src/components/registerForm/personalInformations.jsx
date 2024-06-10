@@ -42,14 +42,14 @@ const PersonalInformations = ({reloadTab, Tab}) => {
 
     useEffect(() => {
       setPayload({
-        firstName: payload.firstName,
-        lastName: payload.lastName,
-        birthDate: payload.birthDate,
-        adress: payload.adress,
-        city: payload.city,
-        zipCode: payload.zipCode,
-        campagnyName: payload.campagnyName,
-        siretNumber: payload.siretNumber
+        firstName: payload.firstName ?? "",
+        lastName: payload.lastName ?? "",
+        birthDate: payload.birthDate ?? "",
+        adress: payload.adress ?? "",
+        city: payload.city ?? "",
+        zipCode: payload.zipCode ?? "",
+        campagnyName: payload.campagnyName ?? "",
+        siretNumber: payload.siretNumber ?? ""
       });
       dispatch(GetCurrentInfos()).then(res => {
         setPayload(res.payload);
