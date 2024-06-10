@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { GetRequiredDocuments, GetSentDocuments, SendDocuments } from '../../app/features/documents/documentSlice';
+import { updateTab } from "../../app/features/registerTab/registerSlice";
 
-const DocumentInformations = () => {
+const DocumentInformations = ({Tab}) => {
 
   const documents = useSelector(state => state.document);
+  const register = useSelector(state => state.register);
   const dispatch = useDispatch();
   const [files, setFiles] = useState([]);
 
@@ -21,8 +23,16 @@ const DocumentInformations = () => {
   }
 
   useEffect(() => {
-    dispatch(GetRequiredDocuments());
-    dispatch(GetSentDocuments());
+
+    console.log(JSON.stringify(documents.sentDocuments) == JSON.stringify(documents.requiredDocument))
+    if(JSON.stringify(documents.sentDocuments) == JSON.stringify(documents.requiredDocument)) {
+      let deepCopyMailingList = JSON.parse(JSON.stringify(register.mailingList));
+      let deepCopyTab = JSON.parse(JSON.stringify(Tab));
+      let tabIndex = deepCopyMailingList.findIndex(tab => tab.id == 3);
+      let copyTab = { ...deepCopyTab, completed: true };
+      deepCopyMailingList.splice(tabIndex, 3, copyTab);
+      dispatch(updateTab(deepCopyMailingList));
+    }
   }, [])
 
 

@@ -12,6 +12,8 @@ const RegisterForm = () => {
   const [userInformations, setUserInformations] = useState({});
   const [selectedWrapper, setSelectedWrapper] = useState(0);
 
+  
+
   return (
     <div className='flex flex-col min-h-[95vh] w-auto md:px-[8rem] p-2'>
       <h2 className='mt-[100px] text-7xl text-center md:text-left font-medium m-1 animate__animated animate__fadeInDown'>{mailingList[selectedWrapper].title}</h2>
@@ -19,7 +21,7 @@ const RegisterForm = () => {
       {mailingList.length > 0 ? <RadioSelector setSelectedWrapper={setSelectedWrapper} mailingList={mailingList}/> : null}
       {selectedWrapper == 0 && userInformations ? <PersonalInformations Tab={mailingList[0]}/> : null}
       {selectedWrapper == 1 ? <CarInformations Tab={mailingList[1]} userInformations={userInformations} setUserInformations={setUserInformations}/> : null}
-      {selectedWrapper == 2 ? <DocumentInformations/> : null}
+      {selectedWrapper == 2 ? <DocumentInformations Tab={mailingList[2]}/> : null}
     </div>
   )
 }
