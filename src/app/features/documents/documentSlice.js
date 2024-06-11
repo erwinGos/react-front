@@ -37,7 +37,9 @@ export const GetSentDocuments = createAsyncThunk(
 const initialState = {
     requiredDocument: [],
     sentDocuments: [],
-    error: null
+    error: null,
+    GetRequiredDocumentsFetched: false,
+    GetSentDocumentsFetched: false
 };
 
 const documentSlice = createSlice({
@@ -50,6 +52,7 @@ const documentSlice = createSlice({
         builder
         .addCase(GetRequiredDocuments.fulfilled, (state, action) => {
             state.requiredDocument = action.payload.filter(doc => doc != "CAR_REGISTRATION_CARD");
+            state.GetRequiredDocumentsFetched = true;
         })
         .addCase(GetRequiredDocuments.rejected, (state, action) => {
             state.error = action.payload.details;
@@ -57,16 +60,16 @@ const documentSlice = createSlice({
         // Get brand list
         builder
         .addCase(GetSentDocuments.fulfilled, (state, action) => {
-            console.log(action.payload)
             if(action.payload.length > 0) {
                 let sentDocs = [];
                 action.payload.forEach(doc => sentDocs.push(doc.type))
                 state.sentDocuments = sentDocs;
+                
             }
+            state.GetSentDocumentsFetched = true;
             
         })
         .addCase(GetSentDocuments.rejected, (state, action) => {
-            console.log(action)
             state.error = action.payload;
         })
     }

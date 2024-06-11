@@ -14,8 +14,8 @@ const initialForm = {
   type: "",
   inUse: false,
   color: "",
-  nbPlace: 0,
-  year: 0,
+  nbPlace: "",
+  year: "",
   trailerAvailable: false,
   trailerOver750: false,
   animalAvailable: false,
@@ -43,7 +43,6 @@ const CarInformations = ({userInformations, setUserInformations}) => {
   const [formContent, setFormContent] = useState(initialForm);
   
   useEffect(() => {
-    dispatch(GetClientCars({page: 0, size :20}));
     dispatch(GetBrandList());
   }, [])
   
@@ -53,6 +52,7 @@ const CarInformations = ({userInformations, setUserInformations}) => {
     dispatch(UpdateClientCar(formContent)).then((res) => {
       if(res.payload) {
         setToggleForm(false)
+        dispatch(GetClientCars({page: 0, size :20}));
       }
     })
   };

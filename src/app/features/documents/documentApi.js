@@ -16,7 +16,6 @@ export async function GetRequiredDocumentsApi() {
 }
 
 export async function SendDocumentsApi(fileObject) {
-    console.log(fileObject)
     const token = Cookies.get("auth_token");
     const form = new FormData();
     form.append(fileObject.type, fileObject.file);

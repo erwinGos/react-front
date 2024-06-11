@@ -22,19 +22,6 @@ const DocumentInformations = ({Tab}) => {
     })
   }
 
-  useEffect(() => {
-
-    console.log(JSON.stringify(documents.sentDocuments) == JSON.stringify(documents.requiredDocument))
-    if(JSON.stringify(documents.sentDocuments) == JSON.stringify(documents.requiredDocument)) {
-      let deepCopyMailingList = JSON.parse(JSON.stringify(register.mailingList));
-      let deepCopyTab = JSON.parse(JSON.stringify(Tab));
-      let tabIndex = deepCopyMailingList.findIndex(tab => tab.id == 3);
-      let copyTab = { ...deepCopyTab, completed: true };
-      deepCopyMailingList.splice(tabIndex, 3, copyTab);
-      dispatch(updateTab(deepCopyMailingList));
-    }
-  }, [])
-
 
     return (
     <div className='py-14 animate__animated animate__fadeIn'>
