@@ -63,9 +63,6 @@ function App() {
                 let deepCopyTab = JSON.parse(JSON.stringify(mailingList[0]));
                 let tabIndex = deepCopyMailingList.findIndex(tab => tab.id == 1);
                 let copyTab = { ...deepCopyTab, completed: true };
-                console.log(deepCopyMailingList)
-                console.log(tabIndex)
-                console.log(copyTab)
                 deepCopyMailingList.splice(tabIndex, 1, copyTab);
                 dispatch(updateTab(deepCopyMailingList));
               } else {
@@ -83,7 +80,7 @@ function App() {
         });
       });
     }
-  },[])
+  },[auth])
 
   return (
     auth.isAuth != null ? 

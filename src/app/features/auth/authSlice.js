@@ -98,7 +98,6 @@ const authSlice = createSlice({
         })
         .addCase(SignUpMethod.rejected, (state, action) => {
             state.error = "une erreur s'est produite";
-            console.log(action)
         })
 
         // GetInfos method

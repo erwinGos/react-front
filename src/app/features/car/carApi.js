@@ -61,7 +61,6 @@ export async function SetDefaultCarApi(parameters) {
 }
 
 export async function UpdateClientCarApi(payload) {
-    console.log(payload)
     const token = Cookies.get("auth_token");
     const request = await axios.patch(`${process.env.REACT_APP_HOST_NAME}/user/driver/cars/${payload.id}`, payload,{
         headers: {

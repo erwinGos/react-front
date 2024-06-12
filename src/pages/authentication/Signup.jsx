@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import authenticationBackground from "../../assets/images/authentication_bg.jpg";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
@@ -8,6 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 
 const Signup = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const [checkedConditions, setCheckedConditions] = useState(false);
     const [hasToBeModified, setHasToBeModified] = useState(false);
@@ -50,7 +51,16 @@ const Signup = () => {
             return;
         }
 
-        dispatch(SignUpMethod(credentials)).then(res => console.log(res));
+        dispatch(SignUpMethod(credentials)).then(res => {
+            if(res.meta.requestStatus == "fulfilled") {
+                toast.success("Compte crée avec succès.");
+                setTimeout(() => navigate("/"), 2000);
+                return;
+            } 
+            if(res.meta.requestStatus == "rejected") {
+                toast.error("Erreur :" + res.payload.details);
+            }
+        });
         setCredentials({
             email: "",
             phoneNumber: "",
