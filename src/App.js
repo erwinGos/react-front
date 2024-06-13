@@ -29,7 +29,7 @@ function App() {
           const requiredFiltered = RequiredDocuments.payload.filter(doc => doc != "CAR_REGISTRATION_CARD");
           let sentDocs = [];
           SentDocuments.payload.forEach(doc => sentDocs.push(doc.type));
-          let deepCopyMailingList = JSON.parse(JSON.stringify(mailingList));
+          let deepCopyMailingList = [...mailingList];
           let deepCopyTab = JSON.parse(JSON.stringify(mailingList[2]));
           let tabIndex = deepCopyMailingList.findIndex(tab => tab.id == 3);
           let copyTab = { ...deepCopyTab, completed: true };
