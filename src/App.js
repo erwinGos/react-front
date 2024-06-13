@@ -29,11 +29,15 @@ function App() {
           const requiredFiltered = RequiredDocuments.payload.filter(doc => doc != "CAR_REGISTRATION_CARD");
           let sentDocs = [];
           SentDocuments.payload.forEach(doc => sentDocs.push(doc.type));
+          console.log(requiredFiltered)
+          console.log(SentDocuments)
           let deepCopyMailingList = [...mailingList];
           let deepCopyTab = JSON.parse(JSON.stringify(mailingList[2]));
           let tabIndex = deepCopyMailingList.findIndex(tab => tab.id == 3);
           let copyTab = { ...deepCopyTab, completed: true };
-          deepCopyMailingList.splice(tabIndex, 1, copyTab);
+          if(JSON.stringify(requiredFiltered) == JSON.stringify(SentDocuments)) {
+            deepCopyMailingList.splice(tabIndex, 1, copyTab);
+          }
           dispatch(GetClientCars({page: 0, size :20})).then((res) => {
             if(res.payload.length > 0) {
               let CarCopyTab = JSON.parse(JSON.stringify(mailingList[1]));

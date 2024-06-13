@@ -3,8 +3,9 @@ import authenticationBackground from "../../assets/images/authentication_bg.jpg"
 import { ArrowLeftIcon, EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { PostEmailValidation } from "../../app/features/auth/authSlice";
+import { PostEmailValidation, checkTokenValidity } from "../../app/features/auth/authSlice";
 import { ToastContainer, toast } from 'react-toastify';
+import Cookies from "js-cookie";
 
 const VerifyEmail = () => {
     const dispatch = useDispatch();
@@ -28,6 +29,9 @@ const VerifyEmail = () => {
                 return;
             }
             toast.success("Votre compte a été verifié.");
+            console.log(res)
+            Cookies.set("auth_token", res.payload.id_token);
+            dispatch(checkTokenValidity());
             setTimeout(() => navigate("/"), 2000);
             return;
         })

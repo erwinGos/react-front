@@ -23,7 +23,7 @@ const Signin = () => {
         dispatch(SignInMethod(credentials)).then((res) => {
             toast.warn(res.payload.detail);
             if(res.payload.status == 500) {
-                setTimeout(navigate("/otp"), 2000);
+                setTimeout(navigate("/otp"), 1000);
             }
             return;
         })

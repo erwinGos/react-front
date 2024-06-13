@@ -36,8 +36,9 @@ const Signup = () => {
             toast.warn('Mot de passe : la taille doit être comprise entre 8 et 100.');
             return;
         }
-
-        if(!(/^06\d{8}$/).test(credentials.phoneNumber)) {
+        console.log((/^06\d{8}$/).test(credentials.phoneNumber))
+        console.log((/^07\d{8}$/).test(credentials.phoneNumber))
+        if(!(/^06\d{8}$/).test(credentials.phoneNumber) && !(/^07\d{8}$/).test(credentials.phoneNumber)) {
             setHasToBeModified(true);
             setCheckedConditions(false);
             toast.warn('Le numéro de téléphone est invalide.');
@@ -54,11 +55,11 @@ const Signup = () => {
         dispatch(SignUpMethod(credentials)).then(res => {
             if(res.meta.requestStatus == "fulfilled") {
                 toast.success("Compte crée avec succès.");
-                setTimeout(() => navigate("/"), 2000);
+                setTimeout(() => navigate("/otp"), 1000);
                 return;
             } 
             if(res.meta.requestStatus == "rejected") {
-                toast.error("Erreur :" + res.payload.details);
+                toast.error("Erreur : L'inscription n'a pas abouti.");
             }
         });
         setCredentials({

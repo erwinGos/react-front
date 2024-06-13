@@ -80,7 +80,7 @@ export async function CreateClientCarApi(payload) {
         headers: {
             'Content-Type': '*/*',
             Authorization: `Bearer ${token}`,
-            Host: process.env.REACT_APP_HOST_NAME
+            Host: process.env.REACT_APP_BACKEND_SERVER_ADDRESS
         },
         withCredentials: true,
         credentials: 'include'
