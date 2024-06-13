@@ -11,7 +11,7 @@ const initialForm = {
   brand: "",
   modele: "",
   matriculeNumber: "",
-  type: "",
+  type: "BREAK",
   inUse: false,
   color: "",
   nbPlace: "",
@@ -22,7 +22,7 @@ const initialForm = {
   childSeat: false,
   tmpr: false,
   co2Rate: 0,
-  fuelType: "essence"
+  fuelType: "ESSENCE"
 }
 
 const selectOptions = [
@@ -60,8 +60,9 @@ const CarInformations = ({userInformations, setUserInformations}) => {
   const handleCreate = (e) => {
     e.preventDefault()
     dispatch(CreateClientCar({...formContent, driverId: driver.user.id})).then((res) => {
-      if(res.payload) {
+      if(res.meta.requestStatus == "fulfilled") {
         setToggleForm(false)
+        dispatch(GetClientCars({page: 0, size :20}));
       }
     })
   };
@@ -122,10 +123,10 @@ const CarInformations = ({userInformations, setUserInformations}) => {
                   className="block w-full outline-0	bg-gray-100 rounded-md border-none min-h-[55px] px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#B19145] sm:text-sm sm:leading-6"
                   defaultValue={formContent.type}
                   value={formContent.type}
-                  onChange={(e) => setFormContent({...formContent, type: e.target.value})}
+                  onChange={(e) => setFormContent({...formContent, type: e.target.value.toUpperCase()})}
                 >
-                  <option>SUV</option>
                   <option>Break</option>  
+                  <option>SUV</option>
                   <option>Berline</option>
                   <option>Berline Compacte</option>
                 </select>

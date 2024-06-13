@@ -26,11 +26,11 @@ function App() {
     if(auth.isAuth == true) {
       dispatch(GetRequiredDocuments()).then((RequiredDocuments) => {
         dispatch(GetSentDocuments()).then((SentDocuments) => {
-          const requiredFiltered = RequiredDocuments.payload.filter(doc => doc != "CAR_REGISTRATION_CARD");
+          const requiredFiltered = RequiredDocuments ?? RequiredDocuments.payload.filter(doc => doc != "CAR_REGISTRATION_CARD");
           let sentDocs = [];
-          SentDocuments.payload.forEach(doc => sentDocs.push(doc.type));
-          console.log(requiredFiltered)
-          console.log(SentDocuments)
+          if(!SentDocuments) {
+            SentDocuments.payload.forEach(doc => sentDocs.push(doc.type));
+          }
           let deepCopyMailingList = [...mailingList];
           let deepCopyTab = JSON.parse(JSON.stringify(mailingList[2]));
           let tabIndex = deepCopyMailingList.findIndex(tab => tab.id == 3);
@@ -43,7 +43,7 @@ function App() {
               let CarCopyTab = JSON.parse(JSON.stringify(mailingList[1]));
               let CarTabIndex = deepCopyMailingList.findIndex(tab => tab.id == 2);
               let copyCarTab = { ...CarCopyTab, completed: true };
-              deepCopyMailingList.splice(CarTabIndex, 1, copyCarTab);
+              deepCopyMailingList.splice(CarTabIndex, 1, copyCarTab)
             }
           });
           

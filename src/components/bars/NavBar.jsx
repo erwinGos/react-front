@@ -53,7 +53,7 @@ const Navbar = () => {
           </div>
           <div className="hidden lg:flex lg:gap-x-10">
             {navigation.map((item) => (
-              <a key={item.name} href={item.href} className="text-[16px] leading-6 text-gray-900 navlinks hover-grow-border">
+              <a key={item.name} href={item.href} className="text-[16px] leading-6 text-gray-700 navlinks hover-grow-border">
                 {item.name}
               </a>
             ))}

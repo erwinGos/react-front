@@ -76,15 +76,16 @@ export async function UpdateClientCarApi(payload) {
 
 export async function CreateClientCarApi(payload) {
     const token = Cookies.get("auth_token");
-    const request = await axios.post(`${process.env.REACT_APP_HOST_NAME}/user/driver/cars`, payload,{
+
+
+    const request = await fetch(`${process.env.REACT_APP_HOST_NAME}/user/driver/cars`, {
+        method: "POST",
+        body: JSON.stringify({...payload, nbPlace : parseInt(payload.nbPlace), year: parseInt(payload.year)}),
         headers: {
-            'Content-Type': '*/*',
+            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
-            Host: process.env.REACT_APP_BACKEND_SERVER_ADDRESS
         },
-        withCredentials: true,
-        credentials: 'include'
-    });
+    })
 
     const data = request.data;
     return data;
